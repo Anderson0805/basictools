@@ -1,0 +1,58 @@
+---
+title: "HelloWorld"
+author: "Anderson"
+date: "18/10/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+## Import Table and plot Brazil Interest Rate 
+```{r}
+#data
+cdi <- read_delim("https://api.bcb.gov.br/dados/serie/bcdata.sgs.4392/dados?formato=csv&dataInicial=01/01/2000&dataFinal=30/08/2021", 
+            delim = ";", escape_double = FALSE, 
+            col_types = cols(data = col_date(format = "%d/%m/%Y"),                  valor = col_double()), locale = locale(decimal_mark = ","),
+            trim_ws = TRUE)
+
+#chart
+ggplot2:: ggplot(cdi, aes( x = data, y  = valor)) +
+  geom_point(color = ("gray"))+
+ geom_smooth( method = lm,  formula = y ~ poly(x, 6), se = FALSE)+
+ labs( title = "Brazil Interest Rate", x = "Data", y = "Rate", caption = "bcb")+
+  ggthemes::theme_wsj()
+summary(cdi)
+```
+          
+##Trip to Aracaju?
+```{r}
+#
+knitr::include_url("https://www.expedia.com/Things-To-Do-In-Aracaju.d338.Travel-Guide-Activities")
+```
+
+
+
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
